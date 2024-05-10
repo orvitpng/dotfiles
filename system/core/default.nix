@@ -1,5 +1,7 @@
 { pkgs, lib }:
 {
+  imports = [ ./boot ];
+
   zramSwap.enable = true;
 
   users.users.carter = {
