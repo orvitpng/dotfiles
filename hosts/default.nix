@@ -2,13 +2,13 @@
 {
   flake.nixosConfigurations =
     let
-      inherit (inputs.nixpkgs.lib) nixos;
+      inherit (inputs.nixpkgs.lib) nixosSystem;
 
       inherit (import "${self}/system") desktop;
 
       system = "${self}/system";
     in
     {
-      arnold = nixos { modules = desktop; };
+      arnold = nixosSystem { modules = desktop; };
     };
 }

@@ -1,6 +1,6 @@
-{ pkgs, lib }:
+{ pkgs, lib, ... }:
 {
-  imports = [ ./boot ];
+  imports = [ ./boot.nix ];
 
   zramSwap.enable = true;
 
