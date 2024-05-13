@@ -1,13 +1,20 @@
 { pkgs, lib, ... }:
 {
-  imports = [ ./boot.nix ];
+  imports = [
+    ./boot.nix
+    ../programs/doas.nix
+    ../programs/fish.nix
+  ];
 
   zramSwap.enable = true;
 
   users.users.carter = {
     isNormalUser = true;
     shell = pkgs.fish;
-    extraGroups = [ "wheel" ];
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
   };
 
   system.stateVersion = lib.mkDefault "23.11";

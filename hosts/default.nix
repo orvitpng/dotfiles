@@ -4,8 +4,6 @@
     let
       inherit (inputs.nixpkgs.lib) nixosSystem;
 
-      hardware = inputs.nixos-hardware.nixosModules;
-
       system = "${self}/system";
 
       inherit (import system) desktop;
@@ -13,16 +11,25 @@
     {
       arnold = nixosSystem {
         modules =
-          with hardware;
+          with inputs.nixos-hardware.nixosModules;
           [
+            ./arnold
+            "${system}/services/gnome.nix"
+
             common-pc
             common-pc-ssd
             common-cpu-amd
             common-gpu-nvidia-nonprime
-          ]
-          ++ [
-            ./arnold
-            "${system}/services/gnome.nix"
+
+            inputs.home-manager.nixosModules.default {
+              home-manager = {
+                useGlobalPkgs = true;
+                useUserPackages = true;
+                backupFileExtension = "bk";
+
+                users.carter = import ../home/carter;
+              };
+            }
           ]
           ++ desktop;
       };

@@ -8,4 +8,6 @@
       backend = "iwd";
     };
   };
+
+  services.resolved.enable = true;
 }

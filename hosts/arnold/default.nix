@@ -1,1 +1,5 @@
-{ imports = [ ./hardware.nix ]; }
+{
+  imports = [ ./hardware.nix ];
+
+  networking.hostName = "arnold";
+}
