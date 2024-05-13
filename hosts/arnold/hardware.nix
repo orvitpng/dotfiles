@@ -20,19 +20,18 @@
 
   fileSystems = {
     "/" = {
-      device = "/dev/disk/by-uuid/bced959e-c088-4114-900d-fdf2a5b89774";
+      device = "/dev/disk/by-uuid/d7cc9b26-95d3-4212-ae2b-2f393fe0e463";
       fsType = "ext4";
     };
     "/boot" = {
-      device = "/dev/disk/by-uuid/1AF9-FB8D";
+      device = "/dev/disk/by-uuid/8916-D624";
       fsType = "vfat";
     };
     "/home" = {
-      device = "/dev/disk/by-uuid/6c7cdf26-f692-47ab-a866-a60d3f390aa3";
+      device = "/dev/disk/by-uuid/cc38df79-75e6-4526-b7e7-a7b9f5bf2e41";
       fsType = "ext4";
     };
   };
-  swapDevices = [ { device = "/dev/disk/by-uuid/7f4b4820-1791-4db5-a36f-b546c635379d"; } ];
 
   nixpkgs.hostPlatform = "x86_64-linux";
 }

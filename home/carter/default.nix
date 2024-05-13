@@ -1,5 +1,6 @@
 {
   imports = [
+    ./programs/dconf.nix
     ./programs/firefox.nix
     ./programs/git.nix
     ./programs/vscode.nix
