@@ -6,7 +6,7 @@
 
       system = "${self}/system";
 
-      inherit (import system) desktop;
+      desktop = [ "${system}/core" ];
     in
     {
       arnold = nixosSystem {
@@ -21,7 +21,8 @@
             common-cpu-amd
             common-gpu-nvidia-nonprime
 
-            inputs.home-manager.nixosModules.default {
+            inputs.home-manager.nixosModules.default
+            {
               home-manager = {
                 useGlobalPkgs = true;
                 useUserPackages = true;

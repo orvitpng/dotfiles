@@ -2,7 +2,6 @@
 {
   imports = [
     ./boot.nix
-    ../programs/doas.nix
     ../programs/fish.nix
   ];
 
