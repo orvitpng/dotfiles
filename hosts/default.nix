@@ -6,7 +6,21 @@
 
       system = "${self}/system";
 
-      desktop = [ "${system}/core" ];
+      desktop = [
+        "${system}/core"
+
+        inputs.home-manager.nixosModules.default
+        {
+          home-manager = {
+            useGlobalPkgs = true;
+            useUserPackages = true;
+            backupFileExtension = "bk";
+
+            users.carter = import ../home/carter;
+          };
+        }
+      ];
+      laptop = desktop ++ [ "${system}/services/power.nix" ];
     in
     {
       arnold = nixosSystem {
@@ -20,19 +34,19 @@
             common-pc-ssd
             common-cpu-amd
             common-gpu-nvidia-nonprime
-
-            inputs.home-manager.nixosModules.default
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                backupFileExtension = "bk";
-
-                users.carter = import ../home/carter;
-              };
-            }
           ]
           ++ desktop;
+      };
+      alice = nixosSystem {
+        modules =
+          with inputs.nixos-hardware.nixosModules;
+          [
+            ./alice
+            "${system}/services/gnome.nix"
+
+            asus-zephyrus-ga402
+          ]
+          ++ laptop;
       };
     };
 }
