@@ -17,6 +17,7 @@
     ];
   };
 
+  nixpkgs.config.allowUnfree = true;
   system.stateVersion = lib.mkDefault "23.11";
   time.timeZone = lib.mkDefault "America/Chicago";
   nix = {

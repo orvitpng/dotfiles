@@ -16,6 +16,7 @@ in
       speed = 0.5;
     };
     "org/gnome/desktop/screensaver".picture-uri = background;
+    "org/gnome/desktop/session".idle-delay = 0;
     "org/gnome/desktop/wm/keybindings" = {
       switch-applications = [ ];
       switch-applications-backward = [ ];
@@ -27,10 +28,14 @@ in
       edge-tiling = true;
       workspaces-only-on-primary = true;
     };
+    "org/gnome/settings-daemon/plugins/power" = {
+      sleep-inactive-ac-type = "nothing";
+    };
     "org/gnome/shell".favorite-apps = [
       "firefox.desktop"
       "org.gnome.Nautilus.desktop"
-      "code.desktop"
+      "codium.desktop"
+      "org.gnome.Console.desktop"
     ];
   };
 }
