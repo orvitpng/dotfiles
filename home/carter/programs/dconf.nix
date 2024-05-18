@@ -32,9 +32,10 @@ in
       sleep-inactive-ac-type = "nothing";
     };
     "org/gnome/shell".favorite-apps = [
-      "firefox.desktop"
-      "org.gnome.Nautilus.desktop"
+      "librewolf.desktop"
+      "webcord.desktop"
       "codium.desktop"
+      "org.gnome.Nautilus.desktop"
       "org.gnome.Console.desktop"
     ];
   };
