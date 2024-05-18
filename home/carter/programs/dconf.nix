@@ -1,5 +1,5 @@
 let
-  background = "file://${../backgrounds/ducks.png}";
+  background = "file://${../backgrounds/fake-ducks.png}";
 in
 {
   dconf.settings = {
