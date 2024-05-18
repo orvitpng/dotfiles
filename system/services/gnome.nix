@@ -5,6 +5,8 @@
     ./pipewire.nix
   ];
 
+  environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
   services.xserver = {
     enable = true;
     excludePackages = [ pkgs.xterm ];

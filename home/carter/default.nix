@@ -5,6 +5,7 @@
     ./programs/git.nix
     ./programs/librewolf.nix
     ./programs/vscodium.nix
+    ./programs/webcord.nix
   ];
 
   programs.home-manager.enable = true;
