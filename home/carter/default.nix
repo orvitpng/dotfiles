@@ -1,10 +1,10 @@
 {
   imports = [
-    ./modules/dconf.nix
-    ./modules/firefox.nix
-    ./modules/games.nix
-    ./modules/git.nix
-    ./modules/vscode.nix
+    ./programs/dconf.nix
+    ./programs/games.nix
+    ./programs/git.nix
+    ./programs/librewolf.nix
+    ./programs/vscodium.nix
   ];
 
   programs.home-manager.enable = true;
