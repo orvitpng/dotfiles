@@ -2,10 +2,11 @@
   programs.librewolf = {
     enable = true;
     settings = {
-      "privacy.clearOnShutdown.downloads" = false;
-      "privacy.clearOnShutdown.history" = false;
-      "privacy.resistFingerprinting" = false;
       "webgl.disabled" = false;
+      "privacy.resistFingerprinting" = false;
+      "privacy.clearOnShutdown.history" = false;
+      "privacy.clearOnShutdown.cookies" = false;
+      "network.cookie.lifetimePolicy" = 0;
     };
   };
 }
