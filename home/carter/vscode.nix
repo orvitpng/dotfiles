@@ -15,7 +15,7 @@
       "git.path" = "${pkgs.git}/bin/git";
       # nix-ide
       "nix.enableLanguageServer" = true;
-      "nix.serverPath" = "${pkgs.nixd}/bin/nil";
+      "nix.serverPath" = "${pkgs.nil}/bin/nil";
     };
   };
 }

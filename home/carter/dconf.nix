@@ -33,7 +33,7 @@ in
     };
     "org/gnome/shell".favorite-apps = [
       "librewolf.desktop"
-      "webcord.desktop"
+      "armcord.desktop"
       "codium.desktop"
       "org.gnome.Nautilus.desktop"
       "org.gnome.Console.desktop"
