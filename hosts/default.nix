@@ -6,21 +6,20 @@
 
       system = "${self}/system";
 
-      desktop = [
+      default = users: extraSpecialArgs: [
         "${system}/core"
 
         inputs.home-manager.nixosModules.default
         {
           home-manager = {
+            inherit extraSpecialArgs users;
+
             useGlobalPkgs = true;
             useUserPackages = true;
             backupFileExtension = "bk";
-
-            users.carter = import ../home/carter;
           };
         }
       ];
-      laptop = desktop ++ [ "${system}/services/power.nix" ];
     in
     {
       arnold = nixosSystem {
@@ -28,25 +27,26 @@
           with inputs.nixos-hardware.nixosModules;
           [
             ./arnold
-            "${system}/services/gnome.nix"
+            "${system}/desktop.nix"
 
             common-pc
             common-pc-ssd
             common-cpu-amd
             common-gpu-nvidia-nonprime
           ]
-          ++ desktop;
+          ++ default { carter = import ../home/carter; } { games = true; };
       };
       alice = nixosSystem {
         modules =
           with inputs.nixos-hardware.nixosModules;
           [
             ./alice
-            "${system}/services/gnome.nix"
+            "${system}/desktop.nix"
+            "${system}/battery.nix"
 
             asus-zephyrus-ga402
           ]
-          ++ laptop;
+          ++ default { carter = import ../home/carter; } { games = false; };
       };
     };
 }

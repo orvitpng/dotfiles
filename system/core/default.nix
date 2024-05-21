@@ -2,9 +2,11 @@
 {
   imports = [
     ./boot.nix
-    ../programs/fish.nix
+    ../shell.nix
   ];
 
+  hardware.enableRedistributableFirmware = true;
+  virtualisation.containers.enable = true;
   zramSwap.enable = true;
 
   users.users.carter = {
@@ -18,7 +20,7 @@
   };
 
   nixpkgs.config.allowUnfree = true;
-  system.stateVersion = lib.mkDefault "23.11";
+  system.stateVersion = "23.11";
   time.timeZone = lib.mkDefault "America/Chicago";
   nix = {
     settings = {
