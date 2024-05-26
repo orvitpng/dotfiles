@@ -31,12 +31,15 @@ in
     "org/gnome/settings-daemon/plugins/power" = {
       sleep-inactive-ac-type = "nothing";
     };
-    "org/gnome/shell".favorite-apps = [
-      "firefox.desktop"
-      "armcord.desktop"
-      "codium.desktop"
-      "org.gnome.Nautilus.desktop"
-      "org.gnome.Console.desktop"
-    ];
+    "org/gnome/shell" = {
+      favorite-apps = [
+        "firefox.desktop"
+        "armcord.desktop"
+        "codium.desktop"
+        "org.gnome.Nautilus.desktop"
+        "org.gnome.Console.desktop"
+      ];
+      enabled-extensions = [ "supergfxctl-gex@asus-linux.org" ];
+    };
   };
 }

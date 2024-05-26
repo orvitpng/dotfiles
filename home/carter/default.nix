@@ -4,10 +4,10 @@
 }:
 {
   imports = [
-    ./dconf.nix
     ./discord.nix
     ./firefox.nix
     ./git.nix
+    ./gnome.nix
     ./vscode.nix
   ] ++ (if games then [ ./games.nix ] else [ ]);
 

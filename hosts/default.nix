@@ -16,7 +16,6 @@
 
             useGlobalPkgs = true;
             useUserPackages = true;
-            backupFileExtension = "bk";
           };
         }
       ];

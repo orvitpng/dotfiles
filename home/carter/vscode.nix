@@ -7,6 +7,7 @@
       github.copilot
       jnoortheen.nix-ide
       mvllow.rose-pine
+      ziglang.vscode-zig
     ];
     userSettings = {
       "workbench.tree.indent" = 40;
@@ -16,6 +17,10 @@
       # nix-ide
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "${pkgs.nil}/bin/nil";
+      # vscode-zig
+      "zig.initialSetupDone" = true;
+      "zig.path" = "${pkgs.zig}/bin/zig";
+      "zig.zls.path" = "${pkgs.zls}/bin/zls";
     };
   };
 }
