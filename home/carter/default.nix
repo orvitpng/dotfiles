@@ -8,6 +8,7 @@
     ./firefox.nix
     ./git.nix
     ./gnome.nix
+    ./idea.nix
     ./vscode.nix
   ] ++ (if games then [ ./games.nix ] else [ ]);
 

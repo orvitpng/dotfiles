@@ -4,6 +4,7 @@
     enable = true;
     package = pkgs.vscodium;
     extensions = with pkgs.vscode-extensions; [
+      denoland.vscode-deno
       github.copilot
       jnoortheen.nix-ide
       mvllow.rose-pine
@@ -14,6 +15,9 @@
       "workbench.colorTheme" = "Rosé Pine";
 
       "git.path" = "${pkgs.git}/bin/git";
+      # vscode-deno
+      "deno.enable" = true;
+      "deno.path" = "${pkgs.deno}/bin/deno";
       # nix-ide
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "${pkgs.nil}/bin/nil";
