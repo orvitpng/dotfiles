@@ -6,6 +6,7 @@
     extensions = with pkgs.vscode-extensions; [
       denoland.vscode-deno
       github.copilot
+      gleam.gleam
       jnoortheen.nix-ide
       mvllow.rose-pine
       ziglang.vscode-zig
@@ -18,6 +19,8 @@
       # vscode-deno
       "deno.enable" = true;
       "deno.path" = "${pkgs.deno}/bin/deno";
+      # gleam
+      "gleam.path" = "${pkgs.gleam}/bin/gleam";
       # nix-ide
       "nix.enableLanguageServer" = true;
       "nix.serverPath" = "${pkgs.nil}/bin/nil";
