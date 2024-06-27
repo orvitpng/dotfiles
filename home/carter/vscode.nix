@@ -9,9 +9,13 @@
       gleam.gleam
       jnoortheen.nix-ide
       mvllow.rose-pine
+      tamasfe.even-better-toml
       ziglang.vscode-zig
     ];
     userSettings = {
+      "editor.fontFamily" = "JetBrainsMono Nerd Font";
+      "editor.fontLigatures" = true;
+      "editor.smoothScrolling" = true;
       "workbench.tree.indent" = 40;
       "workbench.colorTheme" = "Rosé Pine";
 

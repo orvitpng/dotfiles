@@ -6,6 +6,7 @@
   imports = [
     ./discord.nix
     ./firefox.nix
+    ./fonts.nix
     ./git.nix
     ./gnome.nix
     ./idea.nix
