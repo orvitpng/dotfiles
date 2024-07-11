@@ -2,8 +2,6 @@
 {
   imports = [ ./network.nix ];
 
-  environment.sessionVariables.NIXOS_OZONE_WL = "1";
-
   services = {
     xserver = {
       enable = true;
@@ -18,14 +16,10 @@
       jack.enable = true;
       pulse.enable = true;
     };
-
     gnome.gnome-browser-connector.enable = true;
   };
-  hardware.opengl = {
-    enable = true;
-    driSupport = true;
-    driSupport32Bit = true;
+  hardware = {
+    graphics.enable = true;
+    pulseaudio.enable = false;
   };
-
-  hardware.pulseaudio.enable = false;
 }

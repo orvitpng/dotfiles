@@ -33,13 +33,13 @@ in
     };
     "org/gnome/shell" = {
       favorite-apps = [
-        "firefox.desktop"
+        "chromium-browser.desktop"
         "armcord.desktop"
         "codium.desktop"
         "org.gnome.Nautilus.desktop"
         "org.gnome.Console.desktop"
       ];
-      enabled-extensions = [ "supergfxctl-gex@asus-linux.org" ];
+      enabled-extensions = [ "gpu-switcher-supergfxctl@chikobara.github.io" ];
     };
   };
 }

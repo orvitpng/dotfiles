@@ -4,13 +4,12 @@
 }:
 {
   imports = [
+    ./chrome.nix
+    ./code.nix
     ./discord.nix
-    ./firefox.nix
     ./fonts.nix
-    ./git.nix
     ./gnome.nix
-    ./idea.nix
-    ./vscode.nix
+    ./writing.nix
   ] ++ (if games then [ ./games.nix ] else [ ]);
 
   home = {
