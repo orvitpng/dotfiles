@@ -45,7 +45,17 @@
 
             asus-zephyrus-ga402
           ]
-          ++ default { carter = import ../home/carter; } { games = false; };
+          ++ default { carter = import ../home/carter; } { games = true; };
+      };
+      apoc = nixosSystem {
+        modules = with inputs.nixos-hardware.nixosModules; [
+          ./apoc
+          "${system}/core"
+
+          common-pc
+          common-pc-ssd
+          common-cpu-amd
+        ];
       };
     };
 }
