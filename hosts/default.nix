@@ -27,6 +27,7 @@
           [
             ./arnold
             "${system}/desktop.nix"
+            "${system}/virt.nix"
 
             common-pc
             common-pc-ssd

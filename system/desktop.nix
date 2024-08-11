@@ -19,7 +19,10 @@
     gnome.gnome-browser-connector.enable = true;
   };
   hardware = {
-    graphics.enable = true;
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
     pulseaudio.enable = false;
   };
 }

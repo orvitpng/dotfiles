@@ -1,0 +1,793 @@
+<documents>
+<document index="1">
+<source>LICENSE.txt</source>
+<document_content>
+Copyright 2024 Carter Davis
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of
+this software and associated documentation files (the “Software”), to deal in
+the Software without restriction, including without limitation the rights to
+use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies
+of the Software, and to permit persons to whom the Software is furnished to do
+so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.
+
+</document_content>
+</document>
+<document index="2">
+<source>README.txt</source>
+<document_content>
+dotfiles
+========
+
+Very good config, promise 
+
+Based on (but not a fork of) fufexan/dotfiles.
+
+</document_content>
+</document>
+<document index="3">
+<source>flake.lock</source>
+<document_content>
+{
+  "nodes": {
+    "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1722555600,
+        "narHash": "sha256-XOQkdLafnb/p9ij77byFQjDf5m5QYl9b2REiVClC+x4=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "8471fe90ad337a8074e957b69ca4d0089218391d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
+    "home-manager": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1723015306,
+        "narHash": "sha256-jQnFEtH20/OsDPpx71ntZzGdRlpXhUENSQCGTjn//NA=",
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "rev": "b3d5ea65d88d67d4ec578ed11d4d2d51e3de525e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "home-manager",
+        "type": "github"
+      }
+    },
+    "nixos-hardware": {
+      "locked": {
+        "lastModified": 1723310128,
+        "narHash": "sha256-IiH8jG6PpR4h9TxSGMYh+2/gQiJW9MwehFvheSb5rPc=",
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "rev": "c54cf53e022b0b3c1d3b8207aa0f9b194c24f0cf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixos-hardware",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1723175592,
+        "narHash": "sha256-M0xJ3FbDUc4fRZ84dPGx5VvgFsOzds77KiBMW/mMTnI=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "5e0ca22929f3342b19569b21b2f3462f053e497b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1722555339,
+        "narHash": "sha256-uFf2QeW7eAHlYXuDktm9c25OxOyCoUOQmh5SZ9amE5Q=",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/a5d394176e64ab29c852d03346c1fc9b0b7d33eb.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/a5d394176e64ab29c852d03346c1fc9b0b7d33eb.tar.gz"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-parts": "flake-parts",
+        "home-manager": "home-manager",
+        "nixos-hardware": "nixos-hardware",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
+
+</document_content>
+</document>
+<document index="4">
+<source>flake.nix</source>
+<document_content>
+{
+  inputs = {
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
+  };
+  outputs =
+    inputs@{ flake-parts, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = [ "x86_64-linux" ];
+
+      imports = [ ./hosts ];
+
+      perSystem =
+        { pkgs, ... }:
+        {
+          devShells.default = pkgs.mkShell { packages = [ pkgs.nil ]; };
+          formatter = pkgs.nixfmt-rfc-style;
+        };
+    };
+}
+
+</document_content>
+</document>
+<document index="6">
+<source>home/carter/chrome.nix</source>
+<document_content>
+{
+  #  programs.firefox = {
+  #    enable = true;
+  #    profiles.default.settings = {
+  #      "app.shield.optoutstudies.enabled" = false;
+  #      "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.addons" = false;
+  #      "browser.newtabpage.activity-stream.asrouter.userprefs.cfr.features" = false;
+  #      "browser.newtabpage.activity-stream.showSponsored" = false;
+  #      "browser.newtabpage.activity-stream.showSponsoredTopSites" = false;
+  #      "browser.toolbars.bookmarks.visibility" = "never";
+  #      "datareporting.healthreport.uploadEnabled" = false;
+  #      "dom.security.https_only_mode" = true;
+  #      "extensions.pocket.enabled" = false;
+  #      "privacy.donottrackheader.enabled" = true;
+  #      "signon.rememberSignons" = false;
+  #    };
+  #  };
+  programs.chromium = {
+    enable = true;
+    extensions = [
+      # uBlock Origin
+      { id = "cjpalhdlnbpafiamejdnhcphjbkeiagm"; }
+      # Return YouTube Dislikes
+      { id = "gebbhagfogifgggkldgodflihgfeippi"; }
+      # SponsorBlock
+      { id = "mnjggcdmjocbbbhaepdhchncahnbgone"; }
+    ];
+  };
+}
+
+</document_content>
+</document>
+<document index="7">
+<source>home/carter/code.nix</source>
+<document_content>
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    zed-editor
+
+    neovim
+    git
+    zig
+    gleam
+    flyctl
+  ];
+
+  programs.git = {
+    enable = true;
+    userName = "Carter Davis";
+    userEmail = "cdavis4short@gmail.com";
+  };
+}
+
+</document_content>
+</document>
+<document index="8">
+<source>home/carter/default.nix</source>
+<document_content>
+{
+  games ? false,
+  ...
+}:
+{
+  imports = [
+    ./chrome.nix
+    ./code.nix
+    ./discord.nix
+    ./fonts.nix
+    ./gnome.nix
+    ./writing.nix
+  ] ++ (if games then [ ./games.nix ] else [ ]);
+
+  home = {
+    username = "carter";
+    homeDirectory = "/home/carter";
+
+    stateVersion = "23.11";
+  };
+  programs.home-manager.enable = true;
+}
+
+</document_content>
+</document>
+<document index="9">
+<source>home/carter/discord.nix</source>
+<document_content>
+{ pkgs, ... }:
+{
+  home.packages = [ pkgs.armcord ];
+}
+
+</document_content>
+</document>
+<document index="10">
+<source>home/carter/fonts.nix</source>
+<document_content>
+{ pkgs, ... }:
+{
+  fonts.fontconfig.enable = true;
+
+  home.packages = [ pkgs.nerdfonts ];
+}
+
+</document_content>
+</document>
+<document index="11">
+<source>home/carter/games.nix</source>
+<document_content>
+{ pkgs, ... }:
+{
+  home.packages = with pkgs; [
+    keypunch
+    prismlauncher
+    steam
+  ];
+}
+
+</document_content>
+</document>
+<document index="12">
+<source>home/carter/gnome.nix</source>
+<document_content>
+let
+  background = "file://${./backgrounds/ducks.png}";
+in
+{
+  dconf.settings = {
+    "org/gnome/desktop/background" = {
+      picture-uri = background;
+      picture-uri-dark = background;
+    };
+    "org/gnome/desktop/interface" = {
+      color-scheme = "prefer-dark";
+      enable-hot-corners = false;
+    };
+    "org/gnome/desktop/peripherals/mouse" = {
+      accel-profile = "flat";
+      speed = 0.5;
+    };
+    "org/gnome/desktop/screensaver".picture-uri = background;
+    "org/gnome/desktop/session".idle-delay = 0;
+    "org/gnome/desktop/wm/keybindings" = {
+      switch-applications = [ ];
+      switch-applications-backward = [ ];
+      switch-windows = [ "<Alt>Tab" ];
+      switch-windows-backward = [ "<Shift><Alt>Tab" ];
+    };
+    "org/gnome/mutter" = {
+      dynamic-workspaces = true;
+      edge-tiling = true;
+      workspaces-only-on-primary = true;
+    };
+    "org/gnome/settings-daemon/plugins/power" = {
+      sleep-inactive-ac-type = "nothing";
+    };
+    "org/gnome/shell" = {
+      favorite-apps = [
+        "chromium-browser.desktop"
+        "armcord.desktop"
+        "codium.desktop"
+        "org.gnome.Nautilus.desktop"
+        "org.gnome.Console.desktop"
+      ];
+      enabled-extensions = [ "gpu-switcher-supergfxctl@chikobara.github.io" ];
+    };
+  };
+}
+
+</document_content>
+</document>
+<document index="13">
+<source>home/carter/writing.nix</source>
+<document_content>
+{ pkgs, ... }:
+{
+  home.packages = [ pkgs.apostrophe ];
+}
+
+</document_content>
+</document>
+<document index="14">
+<source>hosts/alice/default.nix</source>
+<document_content>
+{ pkgs, ... }:
+{
+  imports = [ ./hardware.nix ];
+
+  environment.systemPackages = [ pkgs.gnomeExtensions.gpu-supergfxctl-switch ];
+
+  networking.hostName = "alice";
+}
+
+</document_content>
+</document>
+<document index="15">
+<source>hosts/alice/hardware.nix</source>
+<document_content>
+{
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "usbhid"
+    "usb_storage"
+    "sd_mod"
+    "sdhci_pci"
+  ];
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/3e0f6306-2f0f-4016-add3-e8f8af2ac0a9";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/079E-13E0";
+      fsType = "vfat";
+    };
+  };
+
+  nixpkgs.hostPlatform = "x86_64-linux";
+}
+
+</document_content>
+</document>
+<document index="16">
+<source>hosts/apoc/default.nix</source>
+<document_content>
+{
+  imports = [ ./hardware.nix ];
+
+  networking = {
+    hostName = "apoc";
+    hostId = "277d6a3a";
+  };
+
+  services.openssh = {
+    enable = true;
+    settings = {
+      PasswordAuthentication = false;
+      KbdInteractiveAuthentication = false;
+    };
+  };
+  users.users.carter.openssh.authorizedKeys.keys = [
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDpZDvcpMX/wyZXu9VIetZPOIFkx4kI2Dte6VlHgG132 cdavis4short@gmail.com"
+  ];
+
+  networking.firewall = {
+    enable = true;
+    allowedTCPPorts = [ 22 ];
+  };
+}
+
+</document_content>
+</document>
+<document index="17">
+<source>hosts/apoc/hardware.nix</source>
+<document_content>
+{
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "ahci"
+    "xhci_pci"
+    "thunderbolt"
+    "usb_storage"
+    "sd_mod"
+  ];
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/5f999881-5a12-4d9a-8591-b803c3f312bc";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/3E55-8721";
+      fsType = "vfat";
+    };
+    "/mnt" = {
+      device = "pool/data";
+      fsType = "zfs";
+    };
+  };
+
+  nixpkgs.hostPlatform = "x86_64-linux";
+}
+
+</document_content>
+</document>
+<document index="18">
+<source>hosts/arnold/default.nix</source>
+<document_content>
+{
+  imports = [ ./hardware.nix ];
+
+  networking.hostName = "arnold";
+}
+
+</document_content>
+</document>
+<document index="19">
+<source>hosts/arnold/hardware.nix</source>
+<document_content>
+{ config, ... }:
+{
+  boot.initrd.availableKernelModules = [
+    "nvme"
+    "xhci_pci"
+    "ahci"
+    "usb_storage"
+    "usbhid"
+    "sd_mod"
+    "sr_mod"
+  ];
+
+  services.xserver.videoDrivers = [ "nvidia" ];
+  hardware.nvidia = {
+    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    modesetting.enable = true;
+    open = true;
+  };
+
+  fileSystems = {
+    "/" = {
+      device = "/dev/disk/by-uuid/d7cc9b26-95d3-4212-ae2b-2f393fe0e463";
+      fsType = "ext4";
+    };
+    "/boot" = {
+      device = "/dev/disk/by-uuid/8916-D624";
+      fsType = "vfat";
+    };
+    "/home" = {
+      device = "/dev/disk/by-uuid/cc38df79-75e6-4526-b7e7-a7b9f5bf2e41";
+      fsType = "ext4";
+    };
+  };
+
+  nixpkgs.hostPlatform = "x86_64-linux";
+}
+
+</document_content>
+</document>
+<document index="20">
+<source>hosts/default.nix</source>
+<document_content>
+{ self, inputs, ... }:
+{
+  flake.nixosConfigurations =
+    let
+      inherit (inputs.nixpkgs.lib) nixosSystem;
+
+      system = "${self}/system";
+
+      default = users: extraSpecialArgs: [
+        "${system}/core"
+
+        inputs.home-manager.nixosModules.default
+        {
+          home-manager = {
+            inherit extraSpecialArgs users;
+
+            useGlobalPkgs = true;
+            useUserPackages = true;
+          };
+        }
+      ];
+    in
+    {
+      arnold = nixosSystem {
+        modules =
+          with inputs.nixos-hardware.nixosModules;
+          [
+            ./arnold
+            "${system}/desktop.nix"
+            "${system}/virt.nix"
+
+            common-pc
+            common-pc-ssd
+            common-cpu-amd
+            common-gpu-nvidia-nonprime
+          ]
+          ++ default { carter = import ../home/carter; } { games = true; };
+      };
+      alice = nixosSystem {
+        modules =
+          with inputs.nixos-hardware.nixosModules;
+          [
+            ./alice
+            "${system}/desktop.nix"
+            "${system}/battery.nix"
+
+            asus-zephyrus-ga402
+          ]
+          ++ default { carter = import ../home/carter; } { games = true; };
+      };
+      apoc = nixosSystem {
+        modules = with inputs.nixos-hardware.nixosModules; [
+          ./apoc
+          "${system}/core"
+
+          common-pc
+          common-pc-ssd
+          common-cpu-amd
+        ];
+      };
+    };
+}
+
+</document_content>
+</document>
+<document index="21">
+<source>system/battery.nix</source>
+<document_content>
+{
+  services = {
+    tlp = {
+      enable = true;
+      settings = {
+        CPU_SCALING_GOVERNOR_ON_AC = "performance";
+        CPU_SCALING_GOVERNOR_ON_BAT = "powersave";
+
+        CPU_ENERGY_PERF_POLICY_ON_BAT = "power";
+        CPU_ENERGY_PERF_POLICY_ON_AC = "performance";
+
+        CPU_MIN_PERF_ON_AC = 0;
+        CPU_MAX_PERF_ON_AC = 100;
+        CPU_MIN_PERF_ON_BAT = 0;
+        CPU_MAX_PERF_ON_BAT = 20;
+
+        START_CHARGE_THRESH_BAT0 = 30;
+        STOP_CHARGE_THRESH_BAT0 = 90;
+      };
+    };
+    auto-cpufreq = {
+      enable = true;
+      settings = {
+        charger = {
+          governor = "performance";
+          turbo = "auto";
+        };
+        battery = {
+          governor = "powersave";
+          turbo = "never";
+        };
+      };
+    };
+    power-profiles-daemon.enable = false;
+  };
+  powerManagement.powertop.enable = true;
+}
+
+</document_content>
+</document>
+<document index="22">
+<source>system/core/boot.nix</source>
+<document_content>
+{ pkgs, ... }:
+{
+  boot = {
+    loader.systemd-boot.enable = true;
+    initrd = {
+      systemd.enable = true;
+      supportedFilesystems = [ "ext4" ];
+    };
+    consoleLogLevel = 3;
+
+    kernelPackages = pkgs.linuxPackages_6_6;
+    kernelParams = [ "quiet" ];
+
+    plymouth.enable = true;
+  };
+}
+
+</document_content>
+</document>
+<document index="23">
+<source>system/core/default.nix</source>
+<document_content>
+{ pkgs, lib, ... }:
+{
+  imports = [
+    ./boot.nix
+    ../shell.nix
+  ];
+
+  hardware.enableRedistributableFirmware = true;
+  virtualisation.containers.enable = true;
+  zramSwap.enable = true;
+
+  users.users.carter = {
+    isNormalUser = true;
+    shell = pkgs.fish;
+    hashedPassword = "$y$j9T$hpS3IoSw4/3YdgVSW0ewj.$MOtSuPHWVYsAlgLNI6vFKR7QZhKECMNNXe0e9fNq/KA";
+    extraGroups = [
+      "wheel"
+      "networkmanager"
+    ];
+  };
+
+  nixpkgs.config.allowUnfree = true;
+  system.stateVersion = "24.05";
+  time.timeZone = lib.mkDefault "America/Chicago";
+  nix = {
+    settings = {
+      auto-optimise-store = true;
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      trusted-users = [
+        "root"
+        "@wheel"
+      ];
+    };
+    gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "--delete-older-than 30d";
+    };
+  };
+}
+
+</document_content>
+</document>
+<document index="24">
+<source>system/desktop.nix</source>
+<document_content>
+{ pkgs, ... }:
+{
+  imports = [ ./network.nix ];
+
+  services = {
+    xserver = {
+      enable = true;
+      excludePackages = [ pkgs.xterm ];
+      displayManager.gdm.enable = true;
+      desktopManager.gnome.enable = true;
+    };
+    pipewire = {
+      enable = true;
+      alsa.enable = true;
+      alsa.support32Bit = true;
+      jack.enable = true;
+      pulse.enable = true;
+    };
+    gnome.gnome-browser-connector.enable = true;
+  };
+  hardware = {
+    graphics = {
+      enable = true;
+      enable32Bit = true;
+    };
+    opengl.enable = true;
+    pulseaudio.enable = false;
+  };
+}
+
+</document_content>
+</document>
+<document index="25">
+<source>system/network.nix</source>
+<document_content>
+{
+  networking.networkmanager = {
+    enable = true;
+    dns = "systemd-resolved";
+    wifi = {
+      powersave = true;
+      macAddress = "stable";
+      backend = "iwd";
+    };
+  };
+
+  services.resolved.enable = true;
+}
+
+</document_content>
+</document>
+<document index="26">
+<source>system/shell.nix</source>
+<document_content>
+{
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = "set fish_greeting";
+  };
+}
+
+</document_content>
+</document>
+<document index="27">
+<source>system/virt.nix</source>
+<document_content>
+{ pkgs, ... }:
+{
+  virtualisation.libvirtd = {
+    enable = true;
+    qemu = {
+      package = pkgs.qemu_kvm;
+      swtpm.enable = true;
+      ovmf = {
+        packages = [
+          (pkgs.OVMFFull.override {
+            secureBoot = true;
+            tpmSupport = true;
+          }).fd
+        ];
+      };
+    };
+  };
+  services = {
+    spice-vdagentd.enable = true;
+    spice-webdavd.enable = true;
+  };
+
+  programs.virt-manager.enable = true;
+}
+
+</document_content>
+</document>
+</documents>
