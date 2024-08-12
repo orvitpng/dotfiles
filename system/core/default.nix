@@ -16,11 +16,13 @@
     extraGroups = [
       "wheel"
       "networkmanager"
-      "libvirt"
+      "vboxusers"
     ];
   };
 
+  # try to make this only apply to home-manager?
   nixpkgs.config.allowUnfree = true;
+
   system.stateVersion = "24.05";
   time.timeZone = lib.mkDefault "America/Chicago";
   nix = {

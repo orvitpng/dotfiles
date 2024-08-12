@@ -2,6 +2,8 @@
 {
   imports = [ ./network.nix ];
 
+  boot.kernelParams = [ "nouveau.config=NvGspRm=1" ];
+
   services = {
     xserver = {
       enable = true;
@@ -18,10 +20,12 @@
     };
     gnome.gnome-browser-connector.enable = true;
   };
+
   hardware = {
     graphics = {
       enable = true;
       enable32Bit = true;
+      # package = pkgs.mesa.drivers;
     };
     pulseaudio.enable = false;
   };

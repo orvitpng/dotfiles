@@ -10,13 +10,6 @@
     "sr_mod"
   ];
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia = {
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
-    modesetting.enable = true;
-    open = true;
-  };
-
   fileSystems = {
     "/" = {
       device = "/dev/disk/by-uuid/d7cc9b26-95d3-4212-ae2b-2f393fe0e463";

@@ -8,7 +8,7 @@
     };
     consoleLogLevel = 3;
 
-    kernelPackages = pkgs.linuxPackages_6_6;
+    kernelPackages = pkgs.linuxPackages_latest;
     kernelParams = [ "quiet" ];
 
     plymouth.enable = true;
