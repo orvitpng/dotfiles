@@ -36,18 +36,6 @@
           ]
           ++ default { carter = import ../home/carter; } { games = true; };
       };
-      alice = nixosSystem {
-        modules =
-          with inputs.nixos-hardware.nixosModules;
-          [
-            ./alice
-            "${system}/desktop.nix"
-            "${system}/battery.nix"
-
-            asus-zephyrus-ga402
-          ]
-          ++ default { carter = import ../home/carter; } { games = true; };
-      };
       apoc = nixosSystem {
         modules = with inputs.nixos-hardware.nixosModules; [
           ./apoc

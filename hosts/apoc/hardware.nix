@@ -1,12 +1,16 @@
+{ config, lib, ... }:
 {
-  boot.initrd.availableKernelModules = [
-    "nvme"
-    "ahci"
-    "xhci_pci"
-    "thunderbolt"
-    "usb_storage"
-    "sd_mod"
-  ];
+  boot = {
+    kernelPackages = lib.mkForce config.boot.zfs.package.latestCompatibleLinuxPackages;
+    initrd.availableKernelModules = [
+      "nvme"
+      "ahci"
+      "xhci_pci"
+      "thunderbolt"
+      "usb_storage"
+      "sd_mod"
+    ];
+  };
 
   fileSystems = {
     "/" = {
