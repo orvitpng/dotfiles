@@ -42,5 +42,6 @@ in
   };
   users.users.carter.openssh.authorizedKeys.keys = [
     "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDpZDvcpMX/wyZXu9VIetZPOIFkx4kI2Dte6VlHgG132 cdavis4short@gmail.com"
+    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK8sUPGLU7+4ga5lGWeI4AsSx9I2vhEHy3bCRM8HUCui cdavis4short@gmail.com"
   ];
 }
