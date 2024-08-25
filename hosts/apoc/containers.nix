@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ pkgs, lib, ... }:
 let
   stdContainer =
     {
@@ -34,9 +34,32 @@ in
         services.jellyfin = {
           enable = true;
           openFirewall = true;
-          configDir = "/mnt/jellyfin-config/";
+          dataDir = "/mnt/jellyfin-data/";
         };
       };
+    })
+    (stdContainer {
+      name = "cloud";
+      addr = "192.168.100.101";
+      bindMounts."/mnt" = {
+        hostPath = "/mnt/cloud";
+        isReadOnly = false;
+      };
+      extraConfig = ({config, ...}: {
+        services.nextcloud = {
+          enable = true;
+          hostName = "cloud.sonnygrace.net";
+          home = "/mnt/nextcloud-data";
+          config.adminpassFile = "/mnt/nextcloud-adminpass";
+
+          extraApps = {
+            inherit (config.services.nextcloud.package.packages.apps) memories;
+          };
+          extraAppsEnable = true;
+        };
+
+        networking.firewall.allowedTCPPorts = [ 80 ];
+      });
     })
   ];
 }

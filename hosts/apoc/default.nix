@@ -33,7 +33,10 @@ in
 
   services.caddy = {
     enable = true;
-    virtualHosts = lib.mkMerge [ (stdHost "media" "media" 8096) ];
+    virtualHosts = lib.mkMerge [
+      (stdHost "media" "media" 8096)
+      (stdHost "cloud" "cloud" 80)
+    ];
   };
 
   services.openssh = {
