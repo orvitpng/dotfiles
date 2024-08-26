@@ -21,14 +21,12 @@ in
       internalInterfaces = [ "ve-+" ];
       externalInterface = "enp11s0";
     };
-    firewall = {
-      enable = true;
+    firewall.
       allowedTCPPorts = [
         22
         80
         443
       ];
-    };
   };
 
   services.caddy = {

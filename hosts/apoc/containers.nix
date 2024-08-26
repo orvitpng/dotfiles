@@ -13,7 +13,12 @@ let
         privateNetwork = true;
         hostAddress = "192.168.100.10";
         config = lib.mkMerge [
-          { hardware.graphics.enable = true; }
+          {
+            networking.useHostResolvConf = lib.mkForce false;
+            services.resolved.enable = true;
+
+            hardware.graphics.enable = true;
+          }
           extraConfig
         ];
         localAddress = addr;
@@ -51,11 +56,6 @@ in
           hostName = "cloud.sonnygrace.net";
           home = "/mnt/nextcloud-data";
           config.adminpassFile = "/mnt/nextcloud-adminpass";
-
-          extraApps = {
-            inherit (config.services.nextcloud.package.packages.apps) memories;
-          };
-          extraAppsEnable = true;
         };
 
         networking.firewall.allowedTCPPorts = [ 80 ];
