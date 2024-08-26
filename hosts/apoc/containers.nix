@@ -31,7 +31,7 @@ in
     (stdContainer {
       name = "media";
       addr = "192.168.100.100";
-      bindMounts."/mnt" = {
+      bindMounts."/mnt/app" = {
         hostPath = "/mnt/media";
         isReadOnly = false;
       };
@@ -39,27 +39,47 @@ in
         services.jellyfin = {
           enable = true;
           openFirewall = true;
-          dataDir = "/mnt/jellyfin-data/";
+          dataDir = "/mnt/app/jellyfin-data/";
         };
+        system.activationScripts.setPermissions = ''
+          chown -R jellyfin:jellyfin /mnt/app
+        '';
       };
     })
     (stdContainer {
       name = "cloud";
       addr = "192.168.100.101";
-      bindMounts."/mnt" = {
-        hostPath = "/mnt/cloud";
-        isReadOnly = false;
-      };
-      extraConfig = ({config, ...}: {
-        services.nextcloud = {
-          enable = true;
-          hostName = "cloud.sonnygrace.net";
-          home = "/mnt/nextcloud-data";
-          config.adminpassFile = "/mnt/nextcloud-adminpass";
+      bindMounts = {
+        "/mnt/app" = {
+          hostPath = "/mnt/cloud";
+          isReadOnly = false;
         };
+        "/mnt/media" = {
+          hostPath = "/mnt/media/media";
+          isReadOnly = false;
+        };
+      };
+      extraConfig = (
+        { config, ... }:
+        {
+          services.nextcloud = {
+            enable = true;
+            hostName = "cloud.sonnygrace.net";
+            home = "/mnt/app/nextcloud-data";
+            config.adminpassFile = "/mnt/app/nextcloud-adminpass";
 
-        networking.firewall.allowedTCPPorts = [ 80 ];
-      });
+            extraApps = {
+              inherit (config.services.nextcloud.package.packages.apps) tasks;
+            };
+            extraAppsEnable = true;
+          };
+          system.activationScripts.setPermissions = ''
+            chown -R nextcloud:nextcloud /mnt/app
+          '';
+
+          networking.firewall.allowedTCPPorts = [ 80 ];
+        }
+      );
     })
   ];
 }
