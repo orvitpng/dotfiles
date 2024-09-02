@@ -1,47 +1,54 @@
-{ config, lib, ... }:
+{ lib, ... }:
 
 let
-  stdHost = host: container: port: {
+  proxy = host: port: {
     "${host}.sonnygrace.net".extraConfig = ''
-      reverse_proxy ${config.containers.${container}.localAddress}:${toString port}
+      reverse_proxy :${toString port}
     '';
   };
 in
 {
   imports = [
-    ./hardware.nix
     ./containers.nix
+    ./hardware.nix
   ];
+
+  services = {
+    # TODO: automatically detect local ip, and also use CNAME instead of A record for *
+    coredns = {
+      enable = true;
+      config = ''
+        . {
+	  forward . 1.1.1.1 1.0.0.1
+	  template ANY ANY {
+	    match (.*\.)?sonnygrace\.net
+	    answer "{{ .Name }} 3600 IN A 192.168.0.16"
+	    fallthrough
+	  }
+	}
+      '';
+    };
+    caddy = {
+      enable = true;
+      virtualHosts = lib.mkMerge [
+        (proxy "media" 8000)
+        (proxy "cloud" 8001)
+      ];
+    };
+  };
 
   networking = {
     hostName = "apoc";
     hostId = "277d6a3a";
-    nat = {
-      enable = true;
-      internalInterfaces = [ "ve-+" ];
-      externalInterface = "enp11s0";
+
+    firewall = {
+      allowedTCPPorts = [
+        22
+        53
+        80
+        443
+      ];
+      allowedUDPPorts = [ 53 ];
     };
-    firewall.allowedTCPPorts = [
-      22
-      80
-      443
-    ];
   };
-
-  services.caddy = {
-    enable = true;
-    virtualHosts = lib.mkMerge [
-      (stdHost "media" "media" 8096)
-      (stdHost "cloud" "cloud" 80)
-    ];
-  };
-
-  services.openssh = {
-    enable = true;
-    settings.PasswordAuthentication = false;
-  };
-  users.users.carter.openssh.authorizedKeys.keys = [
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIDpZDvcpMX/wyZXu9VIetZPOIFkx4kI2Dte6VlHgG132 cdavis4short@gmail.com"
-    "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIK8sUPGLU7+4ga5lGWeI4AsSx9I2vhEHy3bCRM8HUCui cdavis4short@gmail.com"
-  ];
 }
