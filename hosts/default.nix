@@ -1,24 +1,44 @@
 { self, inputs, ... }:
 let
-  inherit (inputs.nixpkgs.lib) nixosSystem;
   inherit (inputs.nixos-hardware) nixosModules;
 
   common = "${self}/common";
+  system =
+    modules:
+    inputs.nixpkgs.lib.nixosSystem {
+      inherit modules;
+      specialArgs = {
+        inherit inputs;
+      };
+    };
 in
 {
   flake.nixosConfigurations = {
-    apoc = nixosSystem {
-      modules = with nixosModules; [
-        ./apoc
+    arnold = system (
+      with nixosModules;
+      [
+        ./arnold
         "${common}"
-        "${common}/ssh.nix"
-        "${common}/zfs.nix"
+        "${common}/carter.nix"
+        "${common}/desktop.nix"
 
         common-pc
         common-pc-ssd
-        common-cpu-amd
+        common-cpu-amd-pstate
+      ]
+    );
+    apoc = system (
+      with nixosModules;
+      [
+        ./apoc
+        "${common}"
+        "${common}/ssh.nix"
+
+        common-pc
+        common-pc-ssd
+        common-cpu-amd-pstate
         common-gpu-amd
-      ];
-    };
+      ]
+    );
   };
 }

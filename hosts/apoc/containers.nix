@@ -15,7 +15,7 @@
         "/mnt/.containers/cloud/data:/var/www/html/data"
         "/mnt/.containers/cloud/config:/var/www/html/config"
         "/mnt/.containers/cloud/apps:/var/www/html/apps"
-	    "/mnt/media:/mnt/media"
+        "/mnt/media:/mnt/media"
       ];
       environment = {
         OVERWRITEPROTOCOL = "https";

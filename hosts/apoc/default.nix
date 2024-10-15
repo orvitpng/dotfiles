@@ -18,14 +18,14 @@ in
     coredns = {
       enable = true;
       config = ''
-        . {
-	  forward . 1.1.1.1 1.0.0.1
-	  template ANY ANY {
-	    match (.*\.)?sonnygrace\.net
-	    answer "{{ .Name }} 3600 IN A 192.168.0.16"
-	    fallthrough
-	  }
-	}
+                . {
+        	  forward . 1.1.1.1 1.0.0.1
+        	  template ANY ANY {
+        	    match (.*\.)?sonnygrace\.net
+        	    answer "{{ .Name }} 3600 IN A 192.168.0.16"
+        	    fallthrough
+        	  }
+        	}
       '';
     };
     caddy = {
