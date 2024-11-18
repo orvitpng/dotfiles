@@ -5,7 +5,10 @@
     ./discord.nix
     ./games.nix
     ./gnome.nix
+    ./security.nix
   ];
+
+  nixpkgs.config.allowUnfree = true;
 
   home = {
     username = "carter";

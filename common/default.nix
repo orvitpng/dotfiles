@@ -24,8 +24,8 @@
   boot = {
     loader.systemd-boot.enable = true;
     plymouth.enable = true;
+    kernelPackages = pkgs.linuxPackages_latest;
   };
-
   hardware.enableRedistributableFirmware = true;
   zramSwap.enable = true;
 }

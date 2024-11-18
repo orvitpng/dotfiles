@@ -1,4 +1,4 @@
-{ lib, ... }:
+{ lib, pkgs, ... }:
 
 let
   proxy = host: port: {
@@ -12,6 +12,8 @@ in
     ./containers.nix
     ./hardware.nix
   ];
+
+  boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
 
   services = {
     # TODO: automatically detect local ip, and also use CNAME instead of A record for *
