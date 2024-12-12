@@ -21,6 +21,7 @@ in
         "${common}"
         "${common}/carter.nix"
         "${common}/desktop.nix"
+        "${common}/ssh.nix"
 
         common-pc
         common-pc-ssd

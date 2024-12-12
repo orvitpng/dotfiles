@@ -1,12 +1,9 @@
-{ lib, pkgs, ... }:
-
-let
-  proxy = host: port: {
-    "${host}.sonnygrace.net".extraConfig = ''
-      reverse_proxy :${toString port}
-    '';
-  };
-in
+{
+  lib,
+  config,
+  pkgs,
+  ...
+}:
 {
   imports = [
     ./containers.nix
@@ -16,36 +13,45 @@ in
   boot.kernelPackages = lib.mkForce pkgs.linuxPackages;
 
   services = {
-    # TODO: automatically detect local ip, and also use CNAME instead of A record for *
     coredns = {
       enable = true;
-      config = ''
-                . {
-        	  forward . 1.1.1.1 1.0.0.1
-        	  template ANY ANY {
-        	    match (.*\.)?sonnygrace\.net
-        	    answer "{{ .Name }} 3600 IN A 192.168.0.16"
-        	    fallthrough
-        	  }
-        	}
-      '';
+      config = builtins.readFile ../../static/apoc_coredns.Corefile;
     };
-    caddy = {
+
+    traefik = {
       enable = true;
-      virtualHosts = lib.mkMerge [
-        (proxy "media" 8000)
-        (proxy "cloud" 8001)
-      ];
+      staticConfigOptions = {
+        entryPoints = {
+          web = {
+            address = ":80";
+            http.redirections.entryPoint = {
+              to = "websecure";
+              scheme = "https";
+              permanent = true;
+            };
+          };
+          websecure = {
+            address = ":443";
+            http.tls.certResolver = "letsencrypt";
+          };
+        };
+        certificatesResolvers.letsencrypt.acme = {
+          email = "postmaster@sonnygrace.net";
+          storage = "${config.services.traefik.dataDir}/acme.json";
+          httpChallenge.entryPoint = "web";
+        };
+
+        providers.docker.exposedByDefault = false;
+      };
     };
   };
+  users.users.traefik.extraGroups = [ "docker" ];
 
   networking = {
     hostName = "apoc";
     hostId = "277d6a3a";
-
     firewall = {
       allowedTCPPorts = [
-        22
         53
         80
         443

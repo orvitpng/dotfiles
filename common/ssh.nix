@@ -6,6 +6,7 @@
       KbdInteractiveAuthentication = false;
     };
   };
+  networking.firewall.allowedTCPPorts = [ 22 ];
 
-  users.users.root.openssh.authorizedKeys.keyFiles = [ ../static/ssh_keys ];
+  users.users.root.openssh.authorizedKeys.keyFiles = [ ../static/authorized_keys ];
 }

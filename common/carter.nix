@@ -2,7 +2,6 @@
 {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
-  nixpkgs.config.allowUnfree = true;
   users.users.carter = {
     isNormalUser = true;
     shell = pkgs.fish;

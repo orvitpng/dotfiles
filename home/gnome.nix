@@ -22,8 +22,7 @@
     };
     "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
     "org/gnome/shell".favorite-apps = [
-      "librewolf.desktop"
-      "discord.desktop"
+      "firefox.desktop"
       "org.gnome.Nautilus.desktop"
       "org.gnome.Console.desktop"
     ];

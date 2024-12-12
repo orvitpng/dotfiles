@@ -21,7 +21,7 @@
       perSystem =
         { pkgs, ... }:
         {
-          devShells.default = pkgs.mkShell { packages = [ pkgs.nil ]; };
+          devShells.default = pkgs.mkShell { packages = [ pkgs.nixd ]; };
           formatter = pkgs.nixfmt-rfc-style;
         };
     };
