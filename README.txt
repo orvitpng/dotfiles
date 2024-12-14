@@ -1,14 +1,16 @@
-# dotfiles
+dotfiles
+========
 
-Very good config, promise 
+The configurations for my personal devices and infrastructure.
 
-## Todo
+Todo
+----
 
 - Find a way to sync LDAP users with Calibre-web
 - Email server for apoc
 - Set a default password for root
 - Fix weird Nvidia graphics corruption with Wayland on GNOME
-- Use a function to create containers for apoc for automated traefik support
+- Use a function to create containers for apoc for automated proxy
 - Add some level of health checking for apoc containers
 - Change up how formatting is done (treefmt?)
 - Switch to NVK/nouveau drivers on arnold
