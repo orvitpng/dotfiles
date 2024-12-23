@@ -6,3 +6,4 @@ The configurations for my personal devices and infrastructure.
 
 - set vscodium extensions through config
 - use zen for browsing
+- automatically import ssh/gpg keys

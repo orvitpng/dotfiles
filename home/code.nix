@@ -12,5 +12,10 @@
       enable = true;
       package = pkgs.vscodium;
     };
+    direnv = {
+      enable = true;
+      nix-direnv.enable = true;
+    };
+    fish.enable = true;
   };
 }

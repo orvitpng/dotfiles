@@ -1,10 +1,11 @@
 {
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
     home-manager.url = "github:nix-community/home-manager";
+    sops-nix.url = "github:Mic92/sops-nix";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
-    sops-nix.url = "github:Mic92/sops-nix";
     treefmt-nix.url = "github:numtide/treefmt-nix";
   };
   outputs =
@@ -12,7 +13,6 @@
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
       imports = with inputs; [
         ./hosts
-        sops-nix.nixosModules.sops
         treefmt-nix.flakeModule
       ];
 
@@ -28,11 +28,6 @@
               nixd
               sops
             ];
-          };
-
-          sops = {
-            defaultSopsFile = ./static/secrets.yaml;
-            defaultSopsFormat = "yaml";
           };
 
           treefmt.programs = {

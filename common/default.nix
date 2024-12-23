@@ -1,5 +1,12 @@
-{ lib, pkgs, ... }:
 {
+  inputs,
+  lib,
+  pkgs,
+  ...
+}:
+{
+  imports = [ inputs.sops-nix.nixosModules.sops ];
+
   nix = {
     settings = {
       auto-optimise-store = true;

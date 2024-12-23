@@ -2,7 +2,6 @@
   imports = [
     ./browser.nix
     ./code.nix
-    ./games.nix
     ./gnome.nix
     ./security.nix
   ];
