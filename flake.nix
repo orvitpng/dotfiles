@@ -1,18 +1,19 @@
 {
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager.url = "github:nix-community/home-manager";
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+    sops-nix.url = "github:Mic92/sops-nix";
     treefmt-nix.url = "github:numtide/treefmt-nix";
-    devshell.url = "github:numtide/devshell";
   };
   outputs =
     inputs:
     inputs.flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        # ./hosts
-        inputs.treefmt-nix.flakeModule
-        inputs.devshell.flakeModule
+      imports = with inputs; [
+        ./hosts
+        sops-nix.nixosModules.sops
+        treefmt-nix.flakeModule
       ];
 
       systems = [
@@ -22,18 +23,29 @@
       perSystem =
         { pkgs, ... }:
         {
+          devShells.default = pkgs.mkShell {
+            buildInputs = with pkgs; [
+              nixd
+              sops
+            ];
+          };
+
+          sops = {
+            defaultSopsFile = ./static/secrets.yaml;
+            defaultSopsFormat = "yaml";
+          };
+
           treefmt.programs = {
             # nix
             nixfmt.enable = true;
             statix.enable = true;
             deadnix.enable = true;
-            # markdown
-            mdformat.enable = true;
             # sh
             shfmt.enable = true;
             shellcheck.enable = true;
+            # markdown
+            mdformat.enable = true;
           };
-          devshells.default.packages = [ pkgs.nixd ];
         };
     };
 }
