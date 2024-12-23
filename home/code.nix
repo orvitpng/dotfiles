@@ -6,7 +6,7 @@
     git = {
       enable = true;
       userName = "Carter Davis";
-      userEmail = "carter1016@gmail.com";
+      userEmail = "carterd1016@gmail.com";
     };
     vscode = {
       enable = true;
