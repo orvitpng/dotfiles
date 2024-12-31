@@ -1,11 +1,27 @@
 {
-  inputs,
+  # config,
+  # inputs,
   lib,
   pkgs,
   ...
 }:
 {
-  imports = [ inputs.sops-nix.nixosModules.sops ];
+  # imports = [ inputs.sops-nix.nixosModules.sops ];
+  # sops = {
+  #   defaultSopsFile = ../static/secrets/default.yaml;
+  #   gnupg = {
+  #     home = "/root/.gnupg";
+  #     sshKeyPaths = [];
+  #   };
+  #   secrets = {
+  #     "passwords/root" = { };
+  #     "passwords/carter" = { };
+  #   };
+  # };
+  programs.gnupg.agent = {
+    enable = true;
+    enableSSHSupport = true;
+  };
 
   nix = {
     settings = {
@@ -27,6 +43,11 @@
   };
   system.stateVersion = "24.11";
   time.timeZone = lib.mkDefault "America/Chicago";
+
+  users = {
+    # users.root.hashedPasswordFile = config.sops.secrets."passwords/root".path;
+    # mutableUsers = false;
+  };
 
   boot = {
     loader = {

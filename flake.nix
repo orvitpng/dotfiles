@@ -24,10 +24,7 @@
         { pkgs, ... }:
         {
           devShells.default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              nixd
-              sops
-            ];
+            buildInputs = [ pkgs.sops ];
           };
 
           treefmt.programs = {
@@ -35,6 +32,8 @@
             nixfmt.enable = true;
             statix.enable = true;
             deadnix.enable = true;
+            # yaml
+            yamlfmt.enable = true;
             # sh
             shfmt.enable = true;
             shellcheck.enable = true;

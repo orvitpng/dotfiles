@@ -1,0 +1,7 @@
+keys:
+  - &pgp_home_carter 2b1722442406939bcae167b9509c6b220622e540
+creation_rules:
+  - path_regex: static/secrets/.*$
+    key_groups:
+      - pgp:
+          - *pgp_home_carter

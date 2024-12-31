@@ -1,18 +1,18 @@
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.qtpass ];
-
+  home.packages = with pkgs; [
+    mullvad-vpn
+    mullvad-closest
+  ];
   programs = {
     gpg.enable = true;
     git.signing = {
       signByDefault = true;
       key = "6F94E77508115E37";
     };
+    password-store = {
+      enable = true;
+      package = pkgs.pass.withExtensions (exts: [ exts.pass-otp ]);
+    };
   };
-  services.gpg-agent = {
-    enable = true;
-    enableSshSupport = true;
-    pinentryPackage = pkgs.pinentry-gnome3;
-  };
-
 }
