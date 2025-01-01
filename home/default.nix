@@ -1,10 +1,16 @@
+{ games }:
+{
+  lib,
+  ...
+}:
 {
   imports = [
     ./browser.nix
     ./code.nix
     ./gnome.nix
     ./security.nix
-  ];
+    ./games.nix
+  ] ++ lib.optionals games [ ./games.nix ];
 
   home = {
     username = "carter";

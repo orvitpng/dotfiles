@@ -1,5 +1,7 @@
 {
-  # config,
+  games ? false,
+}:
+{
   inputs,
   lib,
   pkgs,
@@ -12,12 +14,12 @@
     isNormalUser = true;
     shell = pkgs.fish;
     # hashedPasswordFile = config.sops.secrets."passwords/carter".path;
-    extraGroups = [
-      "wheel"
-      "networkmanager"
-    ];
+    extraGroups = [ "wheel" ];
   };
-  home-manager.users.carter = import ../home;
+  home-manager = {
+    users.carter = (import ../home) { inherit games; };
+    extraSpecialArgs = { inherit inputs; };
+  };
 
   services = {
     mullvad-vpn.enable = true;

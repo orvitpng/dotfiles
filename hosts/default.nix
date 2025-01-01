@@ -19,7 +19,7 @@ in
       [
         ./arnold
         "${common}"
-        "${common}/carter.nix"
+        ((import "${common}/carter.nix") { games = true; })
         "${common}/desktop.nix"
         "${common}/ssh.nix"
 

@@ -4,6 +4,7 @@
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
     };
+    "org/gnome/desktop/media-handling".autorun-never = false;
     "org/gnome/desktop/peripherals/mouse" = {
       accel-profile = "flat";
       speed = 0.5;
@@ -24,7 +25,8 @@
     "org/gnome/shell".favorite-apps = [
       "firefox.desktop"
       "org.gnome.Nautilus.desktop"
-      "org.gnome.Console.desktop"
+      "com.mitchellh.ghostty.desktop"
+      "codium.desktop"
     ];
   };
 }
