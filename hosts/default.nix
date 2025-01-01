@@ -28,5 +28,18 @@ in
         common-cpu-amd-pstate
       ]
     );
+    apoc = system (
+      with nixosModules;
+      [
+        ./apoc
+        "${common}"
+        "${common}/ssh.nix"
+
+        common-pc
+        common-pc-ssd
+        common-cpu-amd-pstate
+        common-gpu-amd
+      ]
+    );
   };
 }
