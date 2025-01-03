@@ -8,24 +8,23 @@
       package = pkgs.vscodium;
       extensions = with pkgs.vscode-extensions; [
         jnoortheen.nix-ide
-        rust-lang.rust-analyzer
         # signageos.signageos-vscode-sops
-        tamasfe.even-better-toml
+        ziglang.vscode-zig
       ];
       userSettings = {
         "workbench.tree.indent" = 32;
 
-        # even-better-toml
-        "evenBetterToml.taplo.bundled" = false;
-        "evenBetterToml.taplo.path" = "${pkgs.taplo}/bin/taplo";
         # nix-ide
         "nix.enableLanguageServer" = true;
         "nix.serverPath" = "${pkgs.nixd}/bin/nixd";
         "nix.hiddenLanguageServerErrors" = [ "textDocument/definition" ];
-        # rust-analyzer
-        "rust-analyzer.cargo.sysroot" = "${pkgs.rustup}";
         # signageos-vscode-sops
         "sops.binPath" = "${pkgs.sops}/bin/sops";
+        # vscode-zig
+        "zig.path" = "${pkgs.zig}/bin/zig";
+        "zig.zls.enabled" = "on";
+        "zig.zls.path" = "${pkgs.zls}/bin/zls";
+        #
       };
     };
     git = {

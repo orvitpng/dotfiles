@@ -17,7 +17,7 @@
     extraGroups = [ "wheel" ];
   };
   home-manager = {
-    users.carter = (import ../home) { inherit games; };
+    users.carter = (import ../home/carter) { inherit games; };
     extraSpecialArgs = { inherit inputs; };
   };
 
