@@ -1,4 +1,3 @@
-{ lib, ... }:
 {
   boot.initrd.availableKernelModules = [
     "nvme"
@@ -24,15 +23,6 @@
       fsType = "ext4";
     };
   };
-
-  nixpkgs.config.allowUnfreePredicate =
-    pkg:
-    builtins.elem (lib.getName pkg) [
-      "nvidia-x11"
-      "nvidia-settings"
-    ];
-  services.xserver.videoDrivers = [ "nvidia" ];
-  hardware.nvidia.open = true;
 
   nixpkgs.hostPlatform = "x86_64-linux";
 }

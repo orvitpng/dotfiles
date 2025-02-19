@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 {
   boot = {
     plymouth.enable = true;
@@ -13,7 +13,10 @@
       enable = true;
       enable32Bit = true;
     };
-    pulseaudio.enable = false;
+    logitech.wireless = {
+      enable = true;
+      enableGraphical = true;
+    };
   };
 
   services = {
@@ -21,6 +24,7 @@
       enable = true;
       displayManager.gdm.enable = true;
       desktopManager.gnome.enable = true;
+      excludePackages = [ pkgs.xterm ];
     };
     pipewire = {
       enable = true;
@@ -31,21 +35,16 @@
       jack.enable = true;
       pulse.enable = true;
     };
-    gnome.core-utilities.enable = false;
-  };
-  programs.firefox = {
-    enable = true;
-    policies = {
-      DisableTelemetry = true;
-      DisableFirefoxStudies = true;
-      DisablePocket = true;
-      ExtensionSettings = {
-        "uBlock0@raymondhill.net" = {
-          install_url = "https://addons.mozilla.org/firefox/downloads/latest/ublock-origin/latest.xpi";
-          installation_mode = "force_installed";
-        };
-      };
+    avahi = {
+      enable = true;
+      nssmdns4 = true;
+      openFirewall = true;
     };
+    printing = {
+      enable = true;
+      drivers = [ pkgs.cups-brother-hll3230cdw ];
+    };
+    gnome.core-utilities.enable = false;
   };
   environment.systemPackages = with pkgs; [
     amberol
@@ -54,6 +53,8 @@
     loupe
     nautilus
   ];
+
+  nixpkgs.config.allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [ "cups-brother-hll3230cdw" ];
 
   networking.networkmanager = {
     enable = true;

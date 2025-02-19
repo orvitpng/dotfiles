@@ -23,6 +23,7 @@ in
         "${common}/desktop.nix"
         "${common}/ssh.nix"
 
+        "${common}/nvidia.nix"
         common-pc
         common-pc-ssd
         common-cpu-amd-pstate

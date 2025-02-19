@@ -1,4 +1,7 @@
 { pkgs, ... }:
 {
-  home.packages = [ pkgs.polymc ];
+  home.packages = with pkgs; [
+    steam
+    prismlauncher
+  ];
 }

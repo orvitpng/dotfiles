@@ -10,6 +10,8 @@
 {
   imports = [ inputs.home-manager.nixosModules.home-manager ];
 
+  nixpkgs.config.allowUnfree = true;
+
   users.users.carter = {
     isNormalUser = true;
     shell = pkgs.fish;
@@ -19,14 +21,22 @@
   home-manager = {
     users.carter = (import ../home/carter) { inherit games; };
     extraSpecialArgs = { inherit inputs; };
+
+    useGlobalPkgs = true;
+    useUserPackages = true;
+    backupFileExtension = "bk";
   };
 
   services = {
     mullvad-vpn.enable = true;
     gnome.gnome-keyring.enable = lib.mkForce false;
+    passSecretService.enable = true;
   };
-  programs.fish = {
-    enable = true;
-    interactiveShellInit = "set fish_greeting";
+  programs = {
+    gamemode.enable = games;
+    fish = {
+      enable = true;
+      interactiveShellInit = "set fish_greeting";
+    };
   };
 }

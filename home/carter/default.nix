@@ -5,6 +5,7 @@
 }:
 {
   imports = [
+    ./ai.nix
     ./browser.nix
     ./code.nix
     ./gnome.nix
@@ -16,7 +17,6 @@
     username = "carter";
     homeDirectory = "/home/carter";
 
-    stateVersion = "24.05";
+    stateVersion = "24.11";
   };
-  programs.home-manager.enable = true;
 }

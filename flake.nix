@@ -1,6 +1,6 @@
 {
   inputs = {
-    nixpkgs.url = "github:orvitpng/nixpkgs/polymc";
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     home-manager = {
       url = "github:nix-community/home-manager";
@@ -8,6 +8,11 @@
     };
     sops-nix = {
       url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    zen-browser-flake = {
+      url = "github:0xc000022070/zen-browser-flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -32,6 +37,7 @@
       perSystem =
         { pkgs, ... }:
         {
+
           devShells.default = pkgs.mkShell {
             buildInputs = [ pkgs.sops ];
           };

@@ -1,5 +1,6 @@
 {
   dconf.settings = {
+    "org/gnome/desktop/app-folders/folders/Utilities".excluded-apps = [ "org.gnome.Loupe.desktop" ];
     "org/gnome/desktop/interface" = {
       color-scheme = "prefer-dark";
       enable-hot-corners = false;
@@ -23,7 +24,7 @@
     };
     "org/gnome/settings-daemon/plugins/power".sleep-inactive-ac-type = "nothing";
     "org/gnome/shell".favorite-apps = [
-      "firefox.desktop"
+      "zen.desktop"
       "org.gnome.Nautilus.desktop"
       "com.mitchellh.ghostty.desktop"
       "codium.desktop"

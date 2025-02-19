@@ -54,7 +54,7 @@
       systemd-boot.enable = true;
       efi.canTouchEfiVariables = true;
     };
-    kernelPackages = lib.mkDefault pkgs.linuxPackages_latest;
+    kernelPackages = lib.mkDefault pkgs.linuxPackages_zen;
     initrd.systemd.enable = true;
   };
   hardware.enableRedistributableFirmware = true;
